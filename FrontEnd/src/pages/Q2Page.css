@@ -1,0 +1,24 @@
+@import './Q1Page.css';
+
+.q1-page.q2-page {
+  background: #19060a url('/q2-pixel-garden-bg.webp') center / cover no-repeat;
+}
+
+.q1-panel.q2-panel {
+  --question-accent: #c9a58d;
+  --question-accent-soft: #edd0ba;
+  --question-selected-bg: linear-gradient(
+    110deg,
+    rgba(102, 34, 37, 0.88),
+    rgba(157, 70, 58, 0.76)
+  );
+  --question-selected-text: #ffd6c6;
+  --question-selected-ring: rgba(255, 127, 93, 0.16);
+  border: 1px solid #513f43;
+  border-radius: 34px;
+  background: rgba(25, 6, 10, 0.85);
+}
+
+.q2-panel .q1-story__eyebrow {
+  color: var(--question-accent-soft);
+}

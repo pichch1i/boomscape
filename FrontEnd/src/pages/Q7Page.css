@@ -1,0 +1,28 @@
+@import './Q1Page.css';
+
+.q1-page.q7-page {
+  background: #111a11 url('/q7-pixel-garden-bg.webp') center / cover no-repeat;
+}
+
+.q1-panel.q7-panel {
+  --question-accent: #d69a91;
+  --question-accent-soft: #f2c6c0;
+  --question-selected-bg: linear-gradient(
+    110deg,
+    rgba(34, 70, 42, 0.9),
+    rgba(70, 103, 69, 0.76)
+  );
+  --question-selected-text: #dff2dc;
+  --question-selected-ring: rgba(130, 186, 119, 0.16);
+  border: 1px solid #3e493e;
+  border-radius: 34px;
+  background: rgba(17, 26, 17, 0.85);
+}
+
+.q7-panel .q1-story__eyebrow {
+  color: var(--question-accent-soft);
+}
+
+.q7-story h1 {
+  font-size: clamp(2rem, 9vw, 2.75rem);
+}

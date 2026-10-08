@@ -1,0 +1,300 @@
+.intro-page {
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-height: 100vh;
+  place-items: center;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 18px 14px;
+  padding:
+    max(18px, env(safe-area-inset-top))
+    max(14px, env(safe-area-inset-right))
+    max(18px, env(safe-area-inset-bottom))
+    max(14px, env(safe-area-inset-left));
+  color: #f5eadf;
+  border: 0;
+  background-color: #050405;
+  box-sizing: border-box;
+}
+
+.intro-page::before {
+  position: absolute;
+  z-index: -2;
+  inset: -12px;
+  background-color: #050405;
+  background-image: url('/flower-grid-pixel-bg.webp');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: saturate(0.92) brightness(0.78) contrast(1.08);
+  transform: scale(1.02);
+  content: '';
+}
+
+.intro-page::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(17, 9, 15, 0.12), rgba(4, 3, 5, 0.58) 86%),
+    linear-gradient(180deg, rgba(2, 2, 3, 0.42), rgba(9, 4, 9, 0.04) 46%, rgba(2, 2, 3, 0.48));
+  content: '';
+  pointer-events: none;
+}
+
+@supports (min-height: 100svh) {
+  .intro-page {
+    min-height: 100svh;
+  }
+}
+
+.intro-card {
+  position: relative;
+  width: min(100%, 560px);
+  padding: 38px 23px 28px;
+  overflow: hidden;
+  border: 1px solid rgba(244, 200, 166, 0.22);
+  border-radius: 32px 8px 32px 8px;
+  background: linear-gradient(145deg, rgba(24, 12, 19, 0.76), rgba(8, 6, 11, 0.68));
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.56),
+    inset 0 1px rgba(255, 232, 206, 0.08);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+@supports ((-webkit-backdrop-filter: blur(16px)) or (backdrop-filter: blur(16px))) {
+  .intro-card {
+    background: linear-gradient(145deg, rgba(26, 13, 20, 0.7), rgba(7, 5, 9, 0.63));
+    -webkit-backdrop-filter: blur(12px) saturate(1.1);
+    backdrop-filter: blur(12px) saturate(1.1);
+  }
+}
+
+.intro-eyebrow {
+  margin: 0 0 12px;
+  color: #d6a586;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+}
+
+.intro-card h1 {
+  margin: 0;
+  color: #fff6e9;
+  font-size: clamp(2.35rem, 11vw, 3.1rem);
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -0.035em;
+}
+
+.intro-card h1 span {
+  display: block;
+  color: #e6c2af;
+  font-size: 0.72em;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+}
+
+.intro-message {
+  display: grid;
+  gap: 13px;
+  margin: 28px auto 0;
+  color: #c9beb8;
+  font-size: 0.97rem;
+  line-height: 1.7;
+}
+
+.intro-message p {
+  margin: 0;
+}
+
+.intro-message strong,
+.intro-message em {
+  color: #f1c79f;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.intro-reassurance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 25px 0 0;
+  color: #e7c5b0;
+  font-size: 1.08rem;
+}
+
+.intro-reassurance span {
+  color: #e3a675;
+  font-size: 0.68rem;
+}
+
+.intro-time {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  padding: 4px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(224, 177, 138, 0.14);
+  color: #d9c7ba;
+  background: rgba(235, 195, 159, 0.08);
+  font-size: 0.82rem;
+}
+
+.intro-time__clock {
+  position: relative;
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+}
+
+.intro-time__clock::before,
+.intro-time__clock::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  border-radius: 1px;
+  background: currentColor;
+  content: '';
+  transform-origin: bottom;
+}
+
+.intro-time__clock::before {
+  height: 4px;
+  transform: translate(-50%, -100%);
+}
+
+.intro-time__clock::after {
+  height: 3px;
+  transform: translate(-50%, -100%) rotate(120deg);
+}
+
+.intro-button {
+  display: flex;
+  width: 100%;
+  min-height: 58px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding: 0 22px;
+  border: 1px solid rgba(255, 221, 190, 0.22);
+  border-radius: 16px 6px 16px 6px;
+  color: #fff9f0;
+  background: linear-gradient(115deg, #6e332e, #a15b45 55%, #c07955);
+  box-shadow:
+    0 14px 34px rgba(132, 58, 39, 0.38),
+    inset 0 1px rgba(255, 234, 213, 0.2);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.97rem;
+  font-weight: 400;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.intro-button:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 18px 38px rgba(151, 70, 47, 0.48),
+    inset 0 1px rgba(255, 238, 220, 0.24);
+}
+
+.intro-button:active {
+  transform: translateY(0);
+}
+
+.intro-button:focus-visible {
+  outline: 3px solid rgba(224, 155, 109, 0.48);
+  outline-offset: 4px;
+}
+
+.intro-button__arrow {
+  font-family: system-ui, sans-serif;
+  font-size: 1.25rem;
+  transition: transform 180ms ease;
+}
+
+.intro-button:hover .intro-button__arrow {
+  transform: translateX(4px);
+}
+
+.intro-sprig {
+  position: absolute;
+  right: -22px;
+  bottom: -28px;
+  width: 132px;
+  height: 116px;
+  opacity: 0.28;
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+
+.intro-sprig__stem {
+  position: absolute;
+  right: 65px;
+  bottom: -8px;
+  width: 2px;
+  height: 126px;
+  border-radius: 50%;
+  background: #be8058;
+  transform: rotate(36deg);
+  transform-origin: bottom;
+}
+
+.intro-sprig__leaf {
+  position: absolute;
+  width: 42px;
+  height: 22px;
+  border-radius: 100% 0 100% 0;
+  background: #9b5e50;
+}
+
+.intro-sprig__leaf--one {
+  right: 32px;
+  bottom: 42px;
+  transform: rotate(28deg);
+}
+
+.intro-sprig__leaf--two {
+  right: 68px;
+  bottom: 64px;
+  transform: rotate(205deg);
+}
+
+.intro-sprig__leaf--three {
+  right: 14px;
+  bottom: 86px;
+  transform: rotate(18deg) scale(0.8);
+}
+
+@media (min-width: 641px) {
+  .intro-page {
+    padding: 56px 24px;
+  }
+
+  .intro-card {
+    padding: 52px 68px 46px;
+    border-radius: 38px 10px 38px 10px;
+  }
+
+  .intro-message {
+    margin-top: 31px;
+    font-size: 1.03rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-button,
+  .intro-button__arrow {
+    transition: none;
+  }
+}
