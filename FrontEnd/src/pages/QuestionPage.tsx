@@ -1,14 +1,16 @@
 import { Fragment, useState } from 'react'
 import { questions, type QuestionOption } from '../data/questions'
 import type { Language } from '../i18n'
+import LanguageSwitcher from '../components/LanguageSwitcher'
 
 type QuestionPageProps = {
   number: number
   language: Language
+  onLanguageChange: (language: Language) => void
   onAnswer: (optionId: QuestionOption['id'], emotion: QuestionOption['emotion']) => void
 }
 
-function QuestionPage({ number, language, onAnswer }: QuestionPageProps) {
+function QuestionPage({ number, language, onLanguageChange, onAnswer }: QuestionPageProps) {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
   const question = questions[number]
   const suffix = number === 1 ? ' q1-page--story-one' : ` q${number}-page`
@@ -18,6 +20,7 @@ function QuestionPage({ number, language, onAnswer }: QuestionPageProps) {
   return (
     <main className={`q1-page${suffix}`}>
       <section className={`q1-panel${panelSuffix}`} aria-labelledby={`q${number}-title`}>
+        <LanguageSwitcher language={language} onChange={onLanguageChange} />
         <header
           className="q1-progress"
           aria-label={
@@ -81,4 +84,3 @@ function QuestionPage({ number, language, onAnswer }: QuestionPageProps) {
 }
 
 export default QuestionPage
-

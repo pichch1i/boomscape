@@ -24,7 +24,6 @@ import Q4Page from './pages/Q4Page'
 import Q5Page from './pages/Q5Page'
 import Q6Page from './pages/Q6Page'
 import Q7Page from './pages/Q7Page'
-import LanguageSwitcher from './components/LanguageSwitcher'
 import {
   DEFAULT_LANGUAGE,
   isLanguage,
@@ -276,13 +275,20 @@ function App() {
 
   const pageContent = (() => {
     if (currentPage === 'player-info') {
-      return <PlayerInfoPage language={language} onContinue={startQuiz} />
+      return (
+        <PlayerInfoPage
+          language={language}
+          onLanguageChange={setLanguage}
+          onContinue={startQuiz}
+        />
+      )
     }
 
     if (currentPage === 'q1') {
       return (
         <Q1Page
           language={language}
+          onLanguageChange={setLanguage}
           onAnswer={(optionId, emotion) =>
             recordAnswer(1, optionId, emotion, 'q2')
           }
@@ -294,6 +300,7 @@ function App() {
       return (
         <Q2Page
           language={language}
+          onLanguageChange={setLanguage}
           onAnswer={(optionId, emotion) =>
             recordAnswer(2, optionId, emotion, 'q3')
           }
@@ -305,6 +312,7 @@ function App() {
       return (
         <Q3Page
           language={language}
+          onLanguageChange={setLanguage}
           onAnswer={(optionId, emotion) =>
             recordAnswer(3, optionId, emotion, 'q4')
           }
@@ -316,6 +324,7 @@ function App() {
       return (
         <Q4Page
           language={language}
+          onLanguageChange={setLanguage}
           onAnswer={(optionId, emotion) =>
             recordAnswer(4, optionId, emotion, 'q5')
           }
@@ -327,6 +336,7 @@ function App() {
       return (
         <Q5Page
           language={language}
+          onLanguageChange={setLanguage}
           onAnswer={(optionId, emotion) =>
             recordAnswer(5, optionId, emotion, 'q6')
           }
@@ -338,6 +348,7 @@ function App() {
       return (
         <Q6Page
           language={language}
+          onLanguageChange={setLanguage}
           onAnswer={(optionId, emotion) =>
             recordAnswer(6, optionId, emotion, 'q7')
           }
@@ -349,6 +360,7 @@ function App() {
       return (
         <Q7Page
           language={language}
+          onLanguageChange={setLanguage}
           onAnswer={(optionId, emotion) =>
             recordAnswer(7, optionId, emotion, 'result')
           }
@@ -360,6 +372,7 @@ function App() {
       return (
         <ResultPage
           language={language}
+          onLanguageChange={setLanguage}
           emotion={resultEmotion}
           submissionId={submissionId}
           onLog={(eventType, target, details) =>
@@ -375,6 +388,7 @@ function App() {
     return (
       <IntroPage
         language={language}
+        onLanguageChange={setLanguage}
         onStart={() => {
           goToPage('player-info')
         }}
@@ -387,10 +401,8 @@ function App() {
   return (
     <div
       className={`app-page-transition app-page-transition--${pageMotion}`}
-      data-page={currentPage}
       key={currentPage}
     >
-      <LanguageSwitcher language={language} onChange={setLanguage} />
       {canGoBack ? (
         <button
           className="app-back-button"

@@ -1,8 +1,8 @@
 .language-switcher {
-  position: fixed;
-  z-index: 50;
-  top: max(30px, calc(env(safe-area-inset-top) + 12px));
-  right: max(30px, calc((100vw - 560px) / 2 + 28px));
+  position: absolute;
+  z-index: 4;
+  top: 18px;
+  right: 18px;
   display: inline-flex;
   min-height: 30px;
   align-items: center;
@@ -14,14 +14,6 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-}
-
-.app-page-transition[data-page='intro'] .language-switcher {
-  top: max(30px, calc(50vh - 270px));
-}
-
-.app-page-transition[data-page='player-info'] .language-switcher {
-  top: max(48px, calc(env(safe-area-inset-top) + 18px));
 }
 
 .language-switcher button {
@@ -54,17 +46,11 @@
   transform: rotate(14deg);
 }
 
-@media (max-width: 620px) {
+@media (max-width: 420px) {
   .language-switcher {
-    top: max(31px, calc(env(safe-area-inset-top) + 12px));
-    right: max(29px, calc(env(safe-area-inset-right) + 29px));
-  }
-
-  .app-page-transition[data-page='intro'] .language-switcher {
-    top: max(31px, calc(50svh - 270px));
-  }
-
-  .app-page-transition[data-page='player-info'] .language-switcher {
-    top: max(82px, calc(env(safe-area-inset-top) + 18px));
+    top: 14px;
+    right: 14px;
+    min-height: 28px;
+    padding-inline: 7px;
   }
 }

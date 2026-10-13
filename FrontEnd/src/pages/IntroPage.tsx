@@ -1,17 +1,20 @@
 import './IntroPage.css'
 import type { Language } from '../i18n'
+import LanguageSwitcher from '../components/LanguageSwitcher'
 
 type IntroPageProps = {
   language: Language
+  onLanguageChange: (language: Language) => void
   onStart: () => void
 }
 
-function IntroPage({ language, onStart }: IntroPageProps) {
+function IntroPage({ language, onLanguageChange, onStart }: IntroPageProps) {
   const isThai = language === 'th'
 
   return (
     <main className="intro-page">
       <section className="intro-card" aria-labelledby="intro-title">
+        <LanguageSwitcher language={language} onChange={onLanguageChange} />
         <p className="intro-eyebrow">
           {isThai ? 'การเดินทางเล็ก ๆ ของคุณ' : 'A little journey of your own'}
         </p>

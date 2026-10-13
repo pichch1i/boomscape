@@ -5,6 +5,7 @@ import {
   type PrivacyConsent,
 } from '../data/quizSubmission'
 import type { Language } from '../i18n'
+import LanguageSwitcher from '../components/LanguageSwitcher'
 import './PlayerInfoPage.css'
 
 const MIN_AGE = 13
@@ -17,6 +18,7 @@ const ageOptions = Array.from(
 
 type PlayerInfoPageProps = {
   language: Language
+  onLanguageChange: (language: Language) => void
   onContinue: (playerInfo: PlayerInfo, privacyConsent: PrivacyConsent) => void
 }
 
@@ -27,7 +29,7 @@ const occupations = [
   { value: 'parent', th: 'ผู้ปกครอง', en: 'Parent / Guardian' },
 ] as const
 
-function PlayerInfoPage({ language, onContinue }: PlayerInfoPageProps) {
+function PlayerInfoPage({ language, onLanguageChange, onContinue }: PlayerInfoPageProps) {
   const isThai = language === 'th'
   const [age, setAge] = useState('')
   const [isCustomAge, setIsCustomAge] = useState(false)
@@ -61,6 +63,7 @@ function PlayerInfoPage({ language, onContinue }: PlayerInfoPageProps) {
   return (
     <main className="player-info-page">
       <section className="journey-card" aria-labelledby="journey-title">
+        <LanguageSwitcher language={language} onChange={onLanguageChange} />
         <div className="journey-card__intro">
           <p className="journey-eyebrow">
             {isThai ? 'จุดเริ่มต้นของเรื่องราว' : 'Where your story begins'}

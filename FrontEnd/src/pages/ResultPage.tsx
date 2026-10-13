@@ -4,6 +4,7 @@ import {
   type Emotion,
 } from '../data/emotionResults'
 import type { Language } from '../i18n'
+import LanguageSwitcher from '../components/LanguageSwitcher'
 import daisyImage from '../assets/pict/daisy-transparent.webp'
 import dandelionImage from '../assets/pict/dandelion-transparent.webp'
 import lavenderImage from '../assets/pict/lavender-transparent.webp'
@@ -17,6 +18,7 @@ import './ResultPage.css'
 
 type ResultPageProps = {
   language: Language
+  onLanguageChange: (language: Language) => void
   emotion: Emotion
   submissionId: string
   onLog?: (
@@ -38,6 +40,7 @@ const FLOWER_NICKNAME_MAX_LENGTH = 7
 
 function ResultPage({
   language,
+  onLanguageChange,
   emotion,
   submissionId,
   onLog,
@@ -131,6 +134,7 @@ function ResultPage({
           aria-labelledby="result-title"
           data-emotion={emotion.toLowerCase()}
         >
+          <LanguageSwitcher language={language} onChange={onLanguageChange} />
           <img
             className="result-flower-image"
             src={flowerImages[emotion]}

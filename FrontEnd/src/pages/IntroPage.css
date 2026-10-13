@@ -52,7 +52,7 @@
 .intro-card {
   position: relative;
   width: min(100%, 560px);
-  padding: 38px 23px 28px;
+  padding: 60px 23px 28px;
   overflow: hidden;
   border: 1px solid rgba(244, 200, 166, 0.22);
   border-radius: 32px 8px 32px 8px;

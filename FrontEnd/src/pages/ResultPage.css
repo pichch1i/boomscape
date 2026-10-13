@@ -62,7 +62,7 @@
 .result-card {
   position: relative;
   width: min(100%, 680px);
-  padding: 18px 18px 16px;
+  padding: 58px 18px 16px;
   overflow: hidden;
   border: 1px solid rgba(244, 200, 166, 0.2);
   border-radius: 32px 8px 32px 8px;
