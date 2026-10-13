@@ -43,25 +43,6 @@ type Page =
   | 'q7'
   | 'result'
 
-const previousQuestionPages: Partial<Record<Page, Page>> = {
-  q2: 'q1',
-  q3: 'q2',
-  q4: 'q3',
-  q5: 'q4',
-  q6: 'q5',
-  q7: 'q6',
-}
-
-const questionNumbers: Partial<Record<Page, number>> = {
-  q1: 1,
-  q2: 2,
-  q3: 3,
-  q4: 4,
-  q5: 5,
-  q6: 6,
-  q7: 7,
-}
-
 function App() {
   const isAdminPage =
     window.location.pathname.replace(/\/+$/, '').endsWith('/admin') ||
@@ -244,31 +225,6 @@ function App() {
     goToPage(nextPage)
   }
 
-  const goBackToPreviousQuestion = () => {
-    const previousPage = previousQuestionPages[currentPage]
-
-    if (!previousPage) {
-      return
-    }
-
-    const previousQuestion = questionNumbers[previousPage]
-
-    if (previousQuestion) {
-      setAnswers((currentAnswers) =>
-        currentAnswers.filter((answer) => answer.question < previousQuestion),
-      )
-    }
-
-    logUsageEvent('button_click', currentPage, 'back-to-previous-question', {
-      submissionId: submissionId || undefined,
-      details: {
-        from: currentPage,
-        to: previousPage,
-      },
-    })
-    goToPage(previousPage)
-  }
-
   if (isAdminPage) {
     return <AdminPage />
   }
@@ -396,30 +352,11 @@ function App() {
     )
   })()
 
-  const canGoBack = previousQuestionPages[currentPage] !== undefined
-
   return (
     <div
       className={`app-page-transition app-page-transition--${pageMotion}`}
       key={currentPage}
     >
-      {canGoBack ? (
-        <button
-          className="app-back-button"
-          type="button"
-          onClick={goBackToPreviousQuestion}
-          aria-label={
-            language === 'th' ? 'ย้อนกลับไปข้อก่อนหน้า' : 'Go back'
-          }
-        >
-          <span className="app-back-button__icon" aria-hidden="true">
-            ‹
-          </span>
-          <span className="app-back-button__label">
-            {language === 'th' ? 'ย้อนกลับ' : 'Back'}
-          </span>
-        </button>
-      ) : null}
       {pageContent}
     </div>
   )
