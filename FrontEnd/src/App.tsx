@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   detectDominantEmotion,
-  emotionResults,
+  getEmotionResult,
   type Emotion,
 } from './data/emotionResults'
 import type {
@@ -24,6 +24,13 @@ import Q4Page from './pages/Q4Page'
 import Q5Page from './pages/Q5Page'
 import Q6Page from './pages/Q6Page'
 import Q7Page from './pages/Q7Page'
+import LanguageSwitcher from './components/LanguageSwitcher'
+import {
+  DEFAULT_LANGUAGE,
+  isLanguage,
+  LANGUAGE_STORAGE_KEY,
+  type Language,
+} from './i18n'
 
 type Page =
   | 'intro'
@@ -61,6 +68,10 @@ function App() {
     window.location.pathname.replace(/\/+$/, '').endsWith('/admin') ||
     new URLSearchParams(window.location.search).get('admin') === '1'
   const [currentPage, setCurrentPage] = useState<Page>('intro')
+  const [language, setLanguage] = useState<Language>(() => {
+    const savedLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY)
+    return isLanguage(savedLanguage) ? savedLanguage : DEFAULT_LANGUAGE
+  })
   const [pageMotion, setPageMotion] = useState<'idle' | 'leaving'>('idle')
   const [playerInfo, setPlayerInfo] = useState<PlayerInfo | null>(null)
   const [privacyConsent, setPrivacyConsent] =
@@ -90,7 +101,7 @@ function App() {
       const completedEmotion = detectDominantEmotion(
         completedAnswers.map((answer) => answer.emotion),
       )
-      const result = emotionResults[completedEmotion]
+      const result = getEmotionResult(completedEmotion, language)
       const submittedAt = new Date().toISOString()
 
       submissionAttempted.current = true
@@ -110,7 +121,7 @@ function App() {
         submissionAttempted.current = false
       })
     },
-    [isAdminPage, playerInfo, privacyConsent, submissionId],
+    [isAdminPage, language, playerInfo, privacyConsent, submissionId],
   )
 
   useEffect(() => {
@@ -155,6 +166,15 @@ function App() {
   useEffect(() => {
     preloadExperienceAssets()
   }, [])
+
+  useEffect(() => {
+    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language)
+    document.documentElement.lang = language
+    document.title =
+      language === 'th'
+        ? 'ค้นพบดอกไม้ของคุณ | Flower Journey'
+        : 'Discover Your Flower | Flower Journey'
+  }, [language])
 
   const goToPage = (nextPage: Page) => {
     if (pageTimer.current !== null) {
@@ -256,12 +276,13 @@ function App() {
 
   const pageContent = (() => {
     if (currentPage === 'player-info') {
-      return <PlayerInfoPage onContinue={startQuiz} />
+      return <PlayerInfoPage language={language} onContinue={startQuiz} />
     }
 
     if (currentPage === 'q1') {
       return (
         <Q1Page
+          language={language}
           onAnswer={(optionId, emotion) =>
             recordAnswer(1, optionId, emotion, 'q2')
           }
@@ -272,6 +293,7 @@ function App() {
     if (currentPage === 'q2') {
       return (
         <Q2Page
+          language={language}
           onAnswer={(optionId, emotion) =>
             recordAnswer(2, optionId, emotion, 'q3')
           }
@@ -282,6 +304,7 @@ function App() {
     if (currentPage === 'q3') {
       return (
         <Q3Page
+          language={language}
           onAnswer={(optionId, emotion) =>
             recordAnswer(3, optionId, emotion, 'q4')
           }
@@ -292,6 +315,7 @@ function App() {
     if (currentPage === 'q4') {
       return (
         <Q4Page
+          language={language}
           onAnswer={(optionId, emotion) =>
             recordAnswer(4, optionId, emotion, 'q5')
           }
@@ -302,6 +326,7 @@ function App() {
     if (currentPage === 'q5') {
       return (
         <Q5Page
+          language={language}
           onAnswer={(optionId, emotion) =>
             recordAnswer(5, optionId, emotion, 'q6')
           }
@@ -312,6 +337,7 @@ function App() {
     if (currentPage === 'q6') {
       return (
         <Q6Page
+          language={language}
           onAnswer={(optionId, emotion) =>
             recordAnswer(6, optionId, emotion, 'q7')
           }
@@ -322,6 +348,7 @@ function App() {
     if (currentPage === 'q7') {
       return (
         <Q7Page
+          language={language}
           onAnswer={(optionId, emotion) =>
             recordAnswer(7, optionId, emotion, 'result')
           }
@@ -332,6 +359,7 @@ function App() {
     if (currentPage === 'result') {
       return (
         <ResultPage
+          language={language}
           emotion={resultEmotion}
           submissionId={submissionId}
           onLog={(eventType, target, details) =>
@@ -346,6 +374,7 @@ function App() {
 
     return (
       <IntroPage
+        language={language}
         onStart={() => {
           goToPage('player-info')
         }}
@@ -358,19 +387,25 @@ function App() {
   return (
     <div
       className={`app-page-transition app-page-transition--${pageMotion}`}
+      data-page={currentPage}
       key={currentPage}
     >
+      <LanguageSwitcher language={language} onChange={setLanguage} />
       {canGoBack ? (
         <button
           className="app-back-button"
           type="button"
           onClick={goBackToPreviousQuestion}
-          aria-label="ย้อนกลับไปข้อก่อนหน้า"
+          aria-label={
+            language === 'th' ? 'ย้อนกลับไปข้อก่อนหน้า' : 'Go back'
+          }
         >
           <span className="app-back-button__icon" aria-hidden="true">
             ‹
           </span>
-          <span className="app-back-button__label">ย้อนกลับ</span>
+          <span className="app-back-button__label">
+            {language === 'th' ? 'ย้อนกลับ' : 'Back'}
+          </span>
         </button>
       ) : null}
       {pageContent}

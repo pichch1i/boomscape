@@ -1,0 +1,70 @@
+.language-switcher {
+  position: fixed;
+  z-index: 50;
+  top: max(30px, calc(env(safe-area-inset-top) + 12px));
+  right: max(30px, calc((100vw - 560px) / 2 + 28px));
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  padding: 2px 8px;
+  border: 1px solid rgba(232, 171, 127, 0.7);
+  border-radius: 999px;
+  color: #d9c4b7;
+  background: rgba(17, 8, 13, 0.82);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.app-page-transition[data-page='intro'] .language-switcher {
+  top: max(30px, calc(50vh - 270px));
+}
+
+.app-page-transition[data-page='player-info'] .language-switcher {
+  top: max(48px, calc(env(safe-area-inset-top) + 18px));
+}
+
+.language-switcher button {
+  min-width: 25px;
+  padding: 2px 3px;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  font: 500 0.72rem/1.3 Prompt, system-ui, sans-serif;
+  opacity: 0.58;
+  transition: color 160ms ease, opacity 160ms ease;
+}
+
+.language-switcher button.is-active {
+  color: #fff5eb;
+  opacity: 1;
+}
+
+.language-switcher button:focus-visible {
+  outline: 2px solid rgba(240, 177, 132, 0.78);
+  outline-offset: 2px;
+  border-radius: 999px;
+}
+
+.language-switcher > span {
+  width: 1px;
+  height: 15px;
+  background: rgba(236, 189, 155, 0.52);
+  transform: rotate(14deg);
+}
+
+@media (max-width: 620px) {
+  .language-switcher {
+    top: max(31px, calc(env(safe-area-inset-top) + 12px));
+    right: max(29px, calc(env(safe-area-inset-right) + 29px));
+  }
+
+  .app-page-transition[data-page='intro'] .language-switcher {
+    top: max(31px, calc(50svh - 270px));
+  }
+
+  .app-page-transition[data-page='player-info'] .language-switcher {
+    top: max(82px, calc(env(safe-area-inset-top) + 18px));
+  }
+}

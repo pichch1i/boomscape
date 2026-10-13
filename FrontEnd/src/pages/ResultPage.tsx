@@ -1,8 +1,9 @@
 import { useState, type FormEvent } from 'react'
 import {
-  emotionResults,
+  getEmotionResult,
   type Emotion,
 } from '../data/emotionResults'
+import type { Language } from '../i18n'
 import daisyImage from '../assets/pict/daisy-transparent.webp'
 import dandelionImage from '../assets/pict/dandelion-transparent.webp'
 import lavenderImage from '../assets/pict/lavender-transparent.webp'
@@ -15,6 +16,7 @@ import {
 import './ResultPage.css'
 
 type ResultPageProps = {
+  language: Language
   emotion: Emotion
   submissionId: string
   onLog?: (
@@ -35,11 +37,13 @@ const flowerImages: Record<Emotion, string> = {
 const FLOWER_NICKNAME_MAX_LENGTH = 7
 
 function ResultPage({
+  language,
   emotion,
   submissionId,
   onLog,
 }: ResultPageProps) {
-  const result = emotionResults[emotion]
+  const isThai = language === 'th'
+  const result = getEmotionResult(emotion, language)
   const [flowerNickname, setFlowerNickname] = useState('')
   const [nicknameStatus, setNicknameStatus] = useState<
     'idle' | 'submitting' | 'submitted' | 'error'
@@ -133,14 +137,20 @@ function ResultPage({
             alt={result.flower}
           />
 
-          <p className="result-eyebrow">ดอกไม้ของคุณกำลังบาน</p>
+          <p className="result-eyebrow">
+            {isThai ? 'ดอกไม้ของคุณกำลังบาน' : 'Your flower is blooming'}
+          </p>
           <p className="result-flower-name">{result.flower}</p>
           <h1 id="result-title">“{result.resultTitle}”</h1>
 
           <p className="result-description">{result.reason}</p>
 
           <div className="result-message">
-            <p>วันนี้ดอกไม้ของคุณมีบางอย่างอยากบอกว่า...</p>
+            <p>
+              {isThai
+                ? 'วันนี้ดอกไม้ของคุณมีบางอย่างอยากบอกว่า...'
+                : 'Today, your flower has something to tell you…'}
+            </p>
             <blockquote>“{result.message}”</blockquote>
           </div>
 
@@ -151,7 +161,7 @@ function ResultPage({
 
           <form className="result-flower-nickname" onSubmit={submitNickname}>
             <label htmlFor="flower-nickname">
-              ตั้งชื่อเล่นให้ดอกไม้ของคุณ
+              {isThai ? 'ตั้งชื่อเล่นให้ดอกไม้ของคุณ' : 'Give your flower a nickname'}
             </label>
             <input
               id="flower-nickname"
@@ -164,7 +174,7 @@ function ResultPage({
                   setNicknameStatus('idle')
                 }
               }}
-              placeholder="พิมพ์ชื่อเล่นของดอกไม้..."
+              placeholder={isThai ? 'พิมพ์ชื่อเล่นของดอกไม้...' : 'Type a flower nickname…'}
               maxLength={FLOWER_NICKNAME_MAX_LENGTH}
               autoComplete="off"
               disabled={nicknameStatus === 'submitted'}
@@ -182,17 +192,17 @@ function ResultPage({
                 }
               >
                 {nicknameStatus === 'submitting'
-                  ? 'กำลังส่ง'
+                  ? isThai ? 'กำลังส่ง' : 'Sending'
                   : nicknameStatus === 'submitted'
-                    ? 'ส่งแล้ว'
-                    : 'ส่งข้อความ'}
+                    ? isThai ? 'ส่งแล้ว' : 'Sent'
+                    : isThai ? 'ส่งข้อความ' : 'Submit'}
               </button>
             </div>
             <p className="result-flower-nickname__status" aria-live="polite">
               {nicknameStatus === 'submitted' &&
-                'ขอบคุณสำหรับชื่อเล่นของดอกไม้'}
+                (isThai ? 'ขอบคุณสำหรับชื่อเล่นของดอกไม้' : 'Thank you for naming your flower.')}
               {nicknameStatus === 'error' &&
-                'ยังบันทึกชื่อเล่นไม่ได้ กรุณาลองใหม่อีกครั้ง'}
+                (isThai ? 'ยังบันทึกชื่อเล่นไม่ได้ กรุณาลองใหม่อีกครั้ง' : 'We could not save the nickname. Please try again.')}
             </p>
           </form>
 
@@ -209,14 +219,19 @@ function ResultPage({
         className="result-feedback"
         aria-labelledby="result-feedback-title"
       >
-        <h2 id="result-feedback-title">ข้อความนี้ตรงกับคุณไหม?</h2>
+        <h2 id="result-feedback-title">
+          {isThai ? 'ข้อความนี้ตรงกับคุณไหม?' : 'Does this message resonate with you?'}
+        </h2>
         <p>
-          บอกเราได้ว่าความหมายและข้อความของดอกไม้นี้
-          สะท้อนความรู้สึกของคุณมากน้อยแค่ไหน
+          {isThai
+            ? 'บอกเราได้ว่าความหมายและข้อความของดอกไม้นี้สะท้อนความรู้สึกของคุณมากน้อยแค่ไหน'
+            : 'Tell us how closely this flower and its message reflect the way you feel.'}
         </p>
 
         <form onSubmit={submitFeedback}>
-          <label htmlFor="result-feedback-message">ความคิดเห็นของคุณ</label>
+          <label htmlFor="result-feedback-message">
+            {isThai ? 'ความคิดเห็นของคุณ' : 'Your feedback'}
+          </label>
           <textarea
             id="result-feedback-message"
             name="resultFeedback"
@@ -227,7 +242,7 @@ function ResultPage({
                 setFeedbackStatus('idle')
               }
             }}
-            placeholder="พิมพ์ความคิดเห็นของคุณ..."
+            placeholder={isThai ? 'พิมพ์ความคิดเห็นของคุณ...' : 'Type your feedback…'}
             maxLength={500}
             rows={4}
             disabled={feedbackStatus === 'submitted'}
@@ -244,19 +259,19 @@ function ResultPage({
               }
             >
               {feedbackStatus === 'submitting'
-                ? 'กำลังส่ง'
+                ? isThai ? 'กำลังส่ง' : 'Sending'
                 : feedbackStatus === 'submitted'
-                  ? 'ส่งแล้ว'
-                  : 'ส่งข้อความ'}
+                  ? isThai ? 'ส่งแล้ว' : 'Sent'
+                  : isThai ? 'ส่งข้อความ' : 'Submit'}
             </button>
           </div>
         </form>
 
         <p className="result-feedback__status" aria-live="polite">
           {feedbackStatus === 'submitted' &&
-            'ขอบคุณสำหรับความคิดเห็นของคุณ'}
+            (isThai ? 'ขอบคุณสำหรับความคิดเห็นของคุณ' : 'Thank you for your feedback.')}
           {feedbackStatus === 'error' &&
-            'ยังส่งความคิดเห็นไม่ได้ กรุณาลองใหม่อีกครั้ง'}
+            (isThai ? 'ยังส่งความคิดเห็นไม่ได้ กรุณาลองใหม่อีกครั้ง' : 'We could not send your feedback. Please try again.')}
         </p>
       </section>
     </main>

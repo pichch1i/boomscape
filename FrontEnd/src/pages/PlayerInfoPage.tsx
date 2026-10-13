@@ -4,6 +4,7 @@ import {
   type PlayerInfo,
   type PrivacyConsent,
 } from '../data/quizSubmission'
+import type { Language } from '../i18n'
 import './PlayerInfoPage.css'
 
 const MIN_AGE = 13
@@ -15,13 +16,19 @@ const ageOptions = Array.from(
 )
 
 type PlayerInfoPageProps = {
-  onContinue: (
-    playerInfo: PlayerInfo,
-    privacyConsent: PrivacyConsent,
-  ) => void
+  language: Language
+  onContinue: (playerInfo: PlayerInfo, privacyConsent: PrivacyConsent) => void
 }
 
-function PlayerInfoPage({ onContinue }: PlayerInfoPageProps) {
+const occupations = [
+  { value: 'student', th: 'นักเรียน', en: 'School student' },
+  { value: 'university-student', th: 'นักศึกษา', en: 'University student' },
+  { value: 'teacher', th: 'อาจารย์', en: 'Teacher' },
+  { value: 'parent', th: 'ผู้ปกครอง', en: 'Parent / Guardian' },
+] as const
+
+function PlayerInfoPage({ language, onContinue }: PlayerInfoPageProps) {
+  const isThai = language === 'th'
   const [age, setAge] = useState('')
   const [isCustomAge, setIsCustomAge] = useState(false)
   const [occupationChoice, setOccupationChoice] = useState('')
@@ -30,6 +37,9 @@ function PlayerInfoPage({ onContinue }: PlayerInfoPageProps) {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
+    const selectedOccupation = occupations.find(
+      (occupation) => occupation.value === occupationChoice,
+    )
 
     onContinue(
       {
@@ -38,7 +48,7 @@ function PlayerInfoPage({ onContinue }: PlayerInfoPageProps) {
         occupation:
           occupationChoice === 'other'
             ? customOccupation.trim()
-            : occupationChoice,
+            : selectedOccupation?.[language] ?? occupationChoice,
       },
       {
         accepted: true,
@@ -52,29 +62,34 @@ function PlayerInfoPage({ onContinue }: PlayerInfoPageProps) {
     <main className="player-info-page">
       <section className="journey-card" aria-labelledby="journey-title">
         <div className="journey-card__intro">
-          <p className="journey-eyebrow">จุดเริ่มต้นของเรื่องราว</p>
-          <h1 id="journey-title">ก่อนเริ่มออกเดินทาง</h1>
+          <p className="journey-eyebrow">
+            {isThai ? 'จุดเริ่มต้นของเรื่องราว' : 'Where your story begins'}
+          </p>
+          <h1 id="journey-title">
+            {isThai ? 'ก่อนเริ่มออกเดินทาง' : 'Before the journey begins'}
+          </h1>
           <p className="journey-description">
-            บอกเราเกี่ยวกับคุณเล็กน้อย เพื่อเริ่มค้นพบดอกไม้
-            <br className="desktop-break" /> ที่สะท้อนความรู้สึกของคุณ
+            {isThai
+              ? 'บอกเราเกี่ยวกับคุณเล็กน้อย เพื่อเริ่มค้นพบดอกไม้ที่สะท้อนความรู้สึกของคุณ'
+              : 'Tell us a little about yourself to discover the flower that reflects how you feel.'}
           </p>
         </div>
 
         <form className="journey-form" onSubmit={handleSubmit}>
           <label className="journey-field">
-            <span>ชื่อ–นามสกุล</span>
+            <span>{isThai ? 'ชื่อ–นามสกุล' : 'Full name'}</span>
             <input
               type="text"
               name="fullName"
               autoComplete="name"
-              placeholder="ชื่อของคุณ"
+              placeholder={isThai ? 'ชื่อของคุณ' : 'Your name'}
               required
             />
           </label>
 
           <div className="journey-form__row">
             <div className="journey-field journey-field--age">
-              <span id="age-label">อายุ</span>
+              <span id="age-label">{isThai ? 'อายุ' : 'Age'}</span>
               <div className="age-picker">
                 <input
                   type="number"
@@ -87,12 +102,7 @@ function PlayerInfoPage({ onContinue }: PlayerInfoPageProps) {
                   aria-labelledby="age-label"
                   onChange={(event) => {
                     const nextAge = event.target.value
-
-                    // Keep partial input such as "1" while the player is
-                    // typing "18". The min/max constraints validate the
-                    // completed value when the form is submitted.
                     if (!/^\d{0,3}$/.test(nextAge)) return
-
                     setAge(nextAge)
                     setIsCustomAge(
                       nextAge !== '' && Number(nextAge) > MAX_LISTED_AGE,
@@ -104,35 +114,34 @@ function PlayerInfoPage({ onContinue }: PlayerInfoPageProps) {
                 <select
                   className="age-picker__select"
                   value={isCustomAge ? 'other' : age}
-                  aria-label="เลื่อนเลือกอายุ"
+                  aria-label={isThai ? 'เลื่อนเลือกอายุ' : 'Select your age'}
                   onChange={(event) => {
                     const nextAge = event.target.value
-
                     if (nextAge === 'other') {
                       setIsCustomAge(true)
                       setAge('')
                       return
                     }
-
                     setIsCustomAge(false)
                     setAge(nextAge)
                   }}
                 >
-                  <option value="">เลือกอายุ</option>
+                  <option value="">{isThai ? 'เลือกอายุ' : 'Select age'}</option>
                   {ageOptions.map((ageOption) => (
                     <option key={ageOption} value={ageOption}>
-                      {ageOption} ปี
+                      {ageOption} {isThai ? 'ปี' : 'years'}
                     </option>
                   ))}
-                  <option value="other">อื่น ๆ (มากกว่า 55 ปี)</option>
+                  <option value="other">
+                    {isThai ? 'อื่น ๆ (มากกว่า 55 ปี)' : 'Other (over 55)'}
+                  </option>
                 </select>
-
                 <span className="age-picker__chevron" aria-hidden="true" />
               </div>
             </div>
 
             <div className="journey-field journey-field--occupation">
-              <span id="occupation-label">อาชีพ</span>
+              <span id="occupation-label">{isThai ? 'อาชีพ' : 'Occupation'}</span>
               <div className="occupation-picker">
                 <select
                   name="occupationChoice"
@@ -140,24 +149,21 @@ function PlayerInfoPage({ onContinue }: PlayerInfoPageProps) {
                   aria-labelledby="occupation-label"
                   onChange={(event) => {
                     setOccupationChoice(event.target.value)
-
-                    if (event.target.value !== 'other') {
-                      setCustomOccupation('')
-                    }
+                    if (event.target.value !== 'other') setCustomOccupation('')
                   }}
                   required
                 >
-                  <option value="">เลือกอาชีพ</option>
-                  <option value="นักเรียน">นักเรียน</option>
-                  <option value="นักศึกษา">นักศึกษา</option>
-                  <option value="อาจารย์">อาจารย์</option>
-                  <option value="ผู้ปกครอง">ผู้ปกครอง</option>
-                  <option value="other">อื่น ๆ</option>
+                  <option value="">
+                    {isThai ? 'เลือกอาชีพ' : 'Select occupation'}
+                  </option>
+                  {occupations.map((occupation) => (
+                    <option key={occupation.value} value={occupation.value}>
+                      {occupation[language]}
+                    </option>
+                  ))}
+                  <option value="other">{isThai ? 'อื่น ๆ' : 'Other'}</option>
                 </select>
-                <span
-                  className="occupation-picker__chevron"
-                  aria-hidden="true"
-                />
+                <span className="occupation-picker__chevron" aria-hidden="true" />
               </div>
 
               {occupationChoice === 'other' && (
@@ -166,7 +172,7 @@ function PlayerInfoPage({ onContinue }: PlayerInfoPageProps) {
                   type="text"
                   name="occupation"
                   autoComplete="organization-title"
-                  placeholder="ระบุอาชีพของคุณ"
+                  placeholder={isThai ? 'ระบุอาชีพของคุณ' : 'Enter your occupation'}
                   value={customOccupation}
                   onChange={(event) => setCustomOccupation(event.target.value)}
                   autoFocus
@@ -176,69 +182,83 @@ function PlayerInfoPage({ onContinue }: PlayerInfoPageProps) {
             </div>
           </div>
 
-          <section
-            className="journey-privacy"
-            aria-labelledby="privacy-notice-title"
-          >
+          <section className="journey-privacy" aria-labelledby="privacy-notice-title">
             <div className="journey-privacy__heading">
               <span className="journey-privacy__badge">PDPA</span>
               <div>
-                <h2 id="privacy-notice-title">ประกาศความเป็นส่วนตัว</h2>
-                <p>ข้อมูลของคุณจะถูกดูแลอย่างเหมาะสม</p>
+                <h2 id="privacy-notice-title">
+                  {isThai ? 'ประกาศความเป็นส่วนตัว' : 'Privacy notice'}
+                </h2>
+                <p>
+                  {isThai
+                    ? 'ข้อมูลของคุณจะถูกดูแลอย่างเหมาะสม'
+                    : 'Your information will be handled responsibly.'}
+                </p>
               </div>
             </div>
 
             <p className="journey-privacy__summary">
-              เราจะเก็บชื่อ–นามสกุล อายุ อาชีพ คำตอบทั้ง 7 ข้อ ผลลัพธ์
-              ชื่อเล่นของดอกไม้และความคิดเห็นต่อผลลัพธ์ (ถ้ามี)
-              รวมถึงข้อมูลการใช้งานเว็บไซต์แบบพื้นฐาน
-              เพื่อบันทึกและประเมินการใช้งานแบบทดสอบ โดยจัดเก็บใน Supabase
+              {isThai
+                ? 'เราจะเก็บชื่อ–นามสกุล อายุ อาชีพ คำตอบทั้ง 7 ข้อ ผลลัพธ์ ชื่อเล่นของดอกไม้และความคิดเห็นต่อผลลัพธ์ (ถ้ามี) รวมถึงข้อมูลการใช้งานเว็บไซต์แบบพื้นฐาน เพื่อบันทึกและประเมินการใช้งานแบบทดสอบ โดยจัดเก็บใน Supabase'
+                : 'We collect your name, age, occupation, answers to all 7 questions, result, flower nickname and optional feedback, along with basic website usage data. The information is stored in Supabase to record and evaluate quiz participation.'}
             </p>
 
             <details className="journey-privacy__details">
-              <summary>อ่านรายละเอียดการคุ้มครองข้อมูล</summary>
+              <summary>
+                {isThai
+                  ? 'อ่านรายละเอียดการคุ้มครองข้อมูล'
+                  : 'Read the full data protection notice'}
+              </summary>
               <div className="journey-privacy__content">
-                <h3>ผู้ควบคุมข้อมูล</h3>
-                <p>ผู้จัดทำโครงการ Flower Journey</p>
-
-                <h3>ข้อมูลที่เก็บและวัตถุประสงค์</h3>
+                <h3>{isThai ? 'ผู้ควบคุมข้อมูล' : 'Data controller'}</h3>
                 <p>
-                  เก็บชื่อ–นามสกุล อายุ อาชีพ ตัวเลือกและอารมณ์ของแต่ละข้อ
-                  ผลลัพธ์ ชื่อเล่นของดอกไม้ และความคิดเห็นที่คุณเลือกส่ง
-                  รวมถึง log การใช้งาน เช่น การเข้าหน้าแรก การเปลี่ยนหน้า
-                  และการกดปุ่ม เพื่อสร้างผลแบบทดสอบ บันทึกการเข้าร่วม
-                  และวิเคราะห์ภาพรวมของโครงการ โดยอาศัยความยินยอมของคุณ
+                  {isThai ? 'ผู้จัดทำโครงการ Flower Journey' : 'The Flower Journey project team.'}
                 </p>
 
-                <h3>การจัดเก็บและการเปิดเผย</h3>
+                <h3>
+                  {isThai ? 'ข้อมูลที่เก็บและวัตถุประสงค์' : 'Information collected and purpose'}
+                </h3>
                 <p>
-                  ข้อมูลถูกส่งไปยัง Supabase ภายใต้โครงการของผู้จัดทำ
-                  จำกัดการเข้าถึงเฉพาะผู้ดูแลโครงการและผู้ให้บริการระบบที่จำเป็น
-                  และจะไม่นำไปจำหน่ายหรือใช้เพื่อการโฆษณา
+                  {isThai
+                    ? 'เก็บชื่อ–นามสกุล อายุ อาชีพ ตัวเลือกและอารมณ์ของแต่ละข้อ ผลลัพธ์ ชื่อเล่นของดอกไม้ และความคิดเห็นที่คุณเลือกส่ง รวมถึง log การใช้งาน เช่น การเข้าหน้าแรก การเปลี่ยนหน้า และการกดปุ่ม เพื่อสร้างผลแบบทดสอบ บันทึกการเข้าร่วม และวิเคราะห์ภาพรวมของโครงการ โดยอาศัยความยินยอมของคุณ'
+                    : 'We collect your name, age, occupation, choices and emotions for each question, result, flower nickname, optional feedback, and usage logs such as page views and button clicks. We use this data, with your consent, to generate the result, record participation, and analyse the project overall.'}
                 </p>
 
-                <h3>ระยะเวลาจัดเก็บ</h3>
+                <h3>{isThai ? 'การจัดเก็บและการเปิดเผย' : 'Storage and disclosure'}</h3>
                 <p>
-                  จัดเก็บไม่เกิน 1 ปีนับจากวันที่ตอบแบบทดสอบ
-                  จากนั้นจะลบหรือทำให้ไม่สามารถระบุตัวบุคคลได้
-                  เว้นแต่กฎหมายกำหนดให้เก็บไว้นานกว่า
+                  {isThai
+                    ? 'ข้อมูลถูกส่งไปยัง Supabase ภายใต้โครงการของผู้จัดทำ จำกัดการเข้าถึงเฉพาะผู้ดูแลโครงการและผู้ให้บริการระบบที่จำเป็น และจะไม่นำไปจำหน่ายหรือใช้เพื่อการโฆษณา'
+                    : 'Data is sent to the project’s Supabase account. Access is limited to project administrators and necessary service providers. It will not be sold or used for advertising.'}
                 </p>
 
-                <h3>สิทธิของคุณ</h3>
+                <h3>{isThai ? 'ระยะเวลาจัดเก็บ' : 'Retention period'}</h3>
                 <p>
-                  คุณอาจขอเข้าถึง รับสำเนา แก้ไข ลบ จำกัดหรือคัดค้านการใช้ข้อมูล
-                  ถอนความยินยอม และร้องเรียนต่อหน่วยงานที่เกี่ยวข้องได้
-                  การถอนความยินยอมไม่กระทบการใช้ข้อมูลที่เกิดขึ้นก่อนถอน
+                  {isThai
+                    ? 'จัดเก็บไม่เกิน 1 ปีนับจากวันที่ตอบแบบทดสอบ จากนั้นจะลบหรือทำให้ไม่สามารถระบุตัวบุคคลได้ เว้นแต่กฎหมายกำหนดให้เก็บไว้นานกว่า'
+                    : 'Data is kept for no longer than one year after the quiz, then deleted or anonymised unless a longer period is required by law.'}
                 </p>
 
-                <h3>การติดต่อและผลของการไม่ให้ข้อมูล</h3>
+                <h3>{isThai ? 'สิทธิของคุณ' : 'Your rights'}</h3>
                 <p>
-                  ติดต่อผู้จัดทำผ่านช่องทางเดียวกับที่คุณได้รับลิงก์แบบทดสอบนี้
-                  หากไม่ให้ข้อมูลหรือไม่ยินยอม ระบบจะไม่สามารถเริ่มแบบทดสอบ
-                  และบันทึกผลให้คุณได้
+                  {isThai
+                    ? 'คุณอาจขอเข้าถึง รับสำเนา แก้ไข ลบ จำกัดหรือคัดค้านการใช้ข้อมูล ถอนความยินยอม และร้องเรียนต่อหน่วยงานที่เกี่ยวข้องได้ การถอนความยินยอมไม่กระทบการใช้ข้อมูลที่เกิดขึ้นก่อนถอน'
+                    : 'You may request access, a copy, correction, deletion, restriction or objection, withdraw consent, and complain to the relevant authority. Withdrawal does not affect processing carried out beforehand.'}
                 </p>
 
-                <small>ปรับปรุงล่าสุด: 8 ตุลาคม 2569</small>
+                <h3>
+                  {isThai
+                    ? 'การติดต่อและผลของการไม่ให้ข้อมูล'
+                    : 'Contact and choosing not to provide data'}
+                </h3>
+                <p>
+                  {isThai
+                    ? 'ติดต่อผู้จัดทำผ่านช่องทางเดียวกับที่คุณได้รับลิงก์แบบทดสอบนี้ หากไม่ให้ข้อมูลหรือไม่ยินยอม ระบบจะไม่สามารถเริ่มแบบทดสอบและบันทึกผลให้คุณได้'
+                    : 'Contact the project team through the same channel where you received this quiz. Without the requested information and consent, the quiz cannot begin or save your result.'}
+                </p>
+
+                <small>
+                  {isThai ? 'ปรับปรุงล่าสุด: 8 ตุลาคม 2569' : 'Last updated: 8 October 2026'}
+                </small>
               </div>
             </details>
           </section>
@@ -246,16 +266,15 @@ function PlayerInfoPage({ onContinue }: PlayerInfoPageProps) {
           <label className="journey-consent">
             <input type="checkbox" name="dataConsent" required />
             <span>
-              ฉันได้อ่านและรับทราบประกาศความเป็นส่วนตัวข้างต้น
-              และยินยอมให้เก็บรวบรวม ใช้ และบันทึกข้อมูลตามวัตถุประสงค์ที่แจ้งไว้
+              {isThai
+                ? 'ฉันได้อ่านและรับทราบประกาศความเป็นส่วนตัวข้างต้น และยินยอมให้เก็บรวบรวม ใช้ และบันทึกข้อมูลตามวัตถุประสงค์ที่แจ้งไว้'
+                : 'I have read and understood the privacy notice above, and consent to the collection, use, and storage of my information for the stated purposes.'}
             </span>
           </label>
 
           <button className="journey-button" type="submit">
-            <span>เริ่มออกเดินทาง</span>
-            <span className="journey-button__arrow" aria-hidden="true">
-              →
-            </span>
+            <span>{isThai ? 'เริ่มออกเดินทาง' : 'Begin the journey'}</span>
+            <span className="journey-button__arrow" aria-hidden="true">→</span>
           </button>
         </form>
 

@@ -1,3 +1,5 @@
+import type { Language } from '../i18n'
+
 export type Emotion =
   | 'Hope'
   | 'Anxiety'
@@ -43,6 +45,45 @@ export const emotionResults: Record<Emotion, EmotionResult> = {
     resultTitle: 'ดอกไม้แห่งแรงผลักดัน',
     message: 'แรงที่อยู่ข้างในคุณ ค่อย ๆ เปลี่ยนเป็นการเติบโตได้',
   },
+}
+
+const englishEmotionResults: Record<Emotion, EmotionResult> = {
+  Hope: {
+    flower: 'Sunflower',
+    reason: 'Positive energy, looking ahead, and always turning toward the light.',
+    resultTitle: 'The flower of a new dawn',
+    message: 'The light of a new day is always waiting for you to turn toward it.',
+  },
+  Anxiety: {
+    flower: 'Lavender',
+    reason: 'Calm, comfort, and the gentle easing of worry.',
+    resultTitle: 'The flower of comfort',
+    message: 'You do not need to know every answer right now.',
+  },
+  Serenity: {
+    flower: 'Daisy',
+    reason: 'Peace, renewal, and hope when the heart needs time to heal.',
+    resultTitle: 'The flower of breath',
+    message: 'Breathe slowly and grow at your own pace.',
+  },
+  Sadness: {
+    flower: 'Striped carnation',
+    reason: 'A symbol of regret, rejection, apology, and sorrow.',
+    resultTitle: 'The flower of deep feeling',
+    message: 'Your feelings have a place, and they do not need to fade in a hurry.',
+  },
+  Frustration: {
+    flower: 'Dandelion',
+    reason: 'Strength, determination, and the courage to face challenges.',
+    resultTitle: 'The flower of inner drive',
+    message: 'The energy within you can gradually turn into growth.',
+  },
+}
+
+export function getEmotionResult(emotion: Emotion, language: Language) {
+  return language === 'th'
+    ? emotionResults[emotion]
+    : englishEmotionResults[emotion]
 }
 
 const emotions: Emotion[] = [
