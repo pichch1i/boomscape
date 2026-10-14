@@ -10,10 +10,7 @@ import dandelionImage from '../assets/pict/dandelion-transparent.webp'
 import lavenderImage from '../assets/pict/lavender-transparent.webp'
 import stripedCarnationImage from '../assets/pict/striped-carnation-transparent.webp'
 import sunflowerImage from '../assets/pict/sunflower-transparent.webp'
-import {
-  submitFlowerNickname,
-  submitResultFeedback,
-} from '../services/backendApi'
+import { submitResultFeedback } from '../services/backendApi'
 import './ResultPage.css'
 
 type ResultPageProps = {
@@ -36,8 +33,6 @@ const flowerImages: Record<Emotion, string> = {
   Frustration: dandelionImage,
 }
 
-const FLOWER_NICKNAME_MAX_LENGTH = 7
-
 function ResultPage({
   language,
   onLanguageChange,
@@ -47,49 +42,10 @@ function ResultPage({
 }: ResultPageProps) {
   const isThai = language === 'th'
   const result = getEmotionResult(emotion, language)
-  const [flowerNickname, setFlowerNickname] = useState('')
-  const [nicknameStatus, setNicknameStatus] = useState<
-    'idle' | 'submitting' | 'submitted' | 'error'
-  >('idle')
   const [feedback, setFeedback] = useState('')
   const [feedbackStatus, setFeedbackStatus] = useState<
     'idle' | 'submitting' | 'submitted' | 'error'
   >('idle')
-
-  const submitNickname = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-
-    const normalizedNickname = flowerNickname.trim()
-
-    if (!normalizedNickname || nicknameStatus === 'submitting') {
-      return
-    }
-
-    setNicknameStatus('submitting')
-    onLog?.('button_click', 'nickname-submit', {
-      nicknameLength: normalizedNickname.length,
-    })
-
-    try {
-      const status = await submitFlowerNickname({
-        action: 'nickname',
-        submissionId,
-        flowerNickname: normalizedNickname,
-        nicknameSubmittedAt: new Date().toISOString(),
-      })
-
-      setNicknameStatus(status === 'submitted' ? 'submitted' : 'error')
-      onLog?.('form_submit', 'nickname-submitted', {
-        status,
-        nicknameLength: normalizedNickname.length,
-      })
-    } catch {
-      setNicknameStatus('error')
-      onLog?.('form_submit', 'nickname-error', {
-        nicknameLength: normalizedNickname.length,
-      })
-    }
-  }
 
   const submitFeedback = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -162,53 +118,6 @@ function ResultPage({
             <span>Emotional State</span>
             <strong>{emotion}</strong>
           </div>
-
-          <form className="result-flower-nickname" onSubmit={submitNickname}>
-            <label htmlFor="flower-nickname">
-              {isThai ? 'ตั้งชื่อเล่นให้ดอกไม้ของคุณ' : 'Give your flower a nickname'}
-            </label>
-            <input
-              id="flower-nickname"
-              name="flowerNickname"
-              type="text"
-              value={flowerNickname}
-              onChange={(event) => {
-                setFlowerNickname(event.target.value)
-                if (nicknameStatus === 'error') {
-                  setNicknameStatus('idle')
-                }
-              }}
-              placeholder={isThai ? 'พิมพ์ชื่อเล่นของดอกไม้...' : 'Type a flower nickname…'}
-              maxLength={FLOWER_NICKNAME_MAX_LENGTH}
-              autoComplete="off"
-              disabled={nicknameStatus === 'submitted'}
-            />
-            <div className="result-flower-nickname__footer">
-              <span>
-                {flowerNickname.length}/{FLOWER_NICKNAME_MAX_LENGTH}
-              </span>
-              <button
-                type="submit"
-                disabled={
-                  !flowerNickname.trim() ||
-                  nicknameStatus === 'submitting' ||
-                  nicknameStatus === 'submitted'
-                }
-              >
-                {nicknameStatus === 'submitting'
-                  ? isThai ? 'กำลังส่ง' : 'Sending'
-                  : nicknameStatus === 'submitted'
-                    ? isThai ? 'ส่งแล้ว' : 'Sent'
-                    : isThai ? 'ส่งข้อความ' : 'Submit'}
-              </button>
-            </div>
-            <p className="result-flower-nickname__status" aria-live="polite">
-              {nicknameStatus === 'submitted' &&
-                (isThai ? 'ขอบคุณสำหรับชื่อเล่นของดอกไม้' : 'Thank you for naming your flower.')}
-              {nicknameStatus === 'error' &&
-                (isThai ? 'ยังบันทึกชื่อเล่นไม่ได้ กรุณาลองใหม่อีกครั้ง' : 'We could not save the nickname. Please try again.')}
-            </p>
-          </form>
 
           <div className="result-sparkles" aria-hidden="true">
             <span>✦</span>

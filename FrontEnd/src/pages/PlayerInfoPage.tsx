@@ -202,8 +202,8 @@ function PlayerInfoPage({ language, onLanguageChange, onContinue }: PlayerInfoPa
 
             <p className="journey-privacy__summary">
               {isThai
-                ? 'เราจะเก็บชื่อ–นามสกุล อายุ อาชีพ คำตอบทั้ง 7 ข้อ ผลลัพธ์ ชื่อเล่นของดอกไม้และความคิดเห็นต่อผลลัพธ์ (ถ้ามี) รวมถึงข้อมูลการใช้งานเว็บไซต์แบบพื้นฐาน เพื่อบันทึกและประเมินการใช้งานแบบทดสอบ โดยจัดเก็บใน Supabase'
-                : 'We collect your name, age, occupation, answers to all 7 questions, result, flower nickname and optional feedback, along with basic website usage data. The information is stored in Supabase to record and evaluate quiz participation.'}
+                ? 'เราจะเก็บชื่อ–นามสกุล อายุ อาชีพ คำตอบทั้ง 7 ข้อ ผลลัพธ์และความคิดเห็นต่อผลลัพธ์ (ถ้ามี) รวมถึงข้อมูลการใช้งานเว็บไซต์แบบพื้นฐาน เพื่อบันทึกและประเมินการใช้งานแบบทดสอบ โดยจัดเก็บใน Supabase'
+                : 'We collect your name, age, occupation, answers to all 7 questions, result and optional feedback, along with basic website usage data. The information is stored in Supabase to record and evaluate quiz participation.'}
             </p>
 
             <details className="journey-privacy__details">
@@ -223,8 +223,8 @@ function PlayerInfoPage({ language, onLanguageChange, onContinue }: PlayerInfoPa
                 </h3>
                 <p>
                   {isThai
-                    ? 'เก็บชื่อ–นามสกุล อายุ อาชีพ ตัวเลือกและอารมณ์ของแต่ละข้อ ผลลัพธ์ ชื่อเล่นของดอกไม้ และความคิดเห็นที่คุณเลือกส่ง รวมถึง log การใช้งาน เช่น การเข้าหน้าแรก การเปลี่ยนหน้า และการกดปุ่ม เพื่อสร้างผลแบบทดสอบ บันทึกการเข้าร่วม และวิเคราะห์ภาพรวมของโครงการ โดยอาศัยความยินยอมของคุณ'
-                    : 'We collect your name, age, occupation, choices and emotions for each question, result, flower nickname, optional feedback, and usage logs such as page views and button clicks. We use this data, with your consent, to generate the result, record participation, and analyse the project overall.'}
+                    ? 'เก็บชื่อ–นามสกุล อายุ อาชีพ ตัวเลือกและอารมณ์ของแต่ละข้อ ผลลัพธ์ และความคิดเห็นที่คุณเลือกส่ง รวมถึง log การใช้งาน เช่น การเข้าหน้าแรก การเปลี่ยนหน้า และการกดปุ่ม เพื่อสร้างผลแบบทดสอบ บันทึกการเข้าร่วม และวิเคราะห์ภาพรวมของโครงการ โดยอาศัยความยินยอมของคุณ'
+                    : 'We collect your name, age, occupation, choices and emotions for each question, result, optional feedback, and usage logs such as page views and button clicks. We use this data, with your consent, to generate the result, record participation, and analyse the project overall.'}
                 </p>
 
                 <h3>{isThai ? 'การจัดเก็บและการเปิดเผย' : 'Storage and disclosure'}</h3>
