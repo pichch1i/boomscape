@@ -319,10 +319,10 @@ function FW_getTouchDesignerEvents_(event) {
 function FW_touchDesignerFlowerMap_() {
   return {
     Hope: { flowerId: 'sunflower', visualIndex: 0 },
-    Anxiety: { flowerId: 'lavender', visualIndex: 1 },
+    Anxiety: { flowerId: 'peach_rose', visualIndex: 1 },
     Serenity: { flowerId: 'daisy', visualIndex: 2 },
     Sadness: { flowerId: 'striped_carnation', visualIndex: 3 },
-    Frustration: { flowerId: 'dandelion', visualIndex: 4 },
+    Frustration: { flowerId: 'globe_thistle', visualIndex: 4 },
   };
 }
 

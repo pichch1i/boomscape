@@ -6,9 +6,12 @@ _cursor = None
 _nickname_max_length = 7
 _flower_indices = {
     'sunflower': 0,
-    'lavender': 1,
+    'peach_rose': 1,
     'daisy': 2,
     'striped_carnation': 3,
+    'globe_thistle': 4,
+    # Legacy IDs are retained so historical queued events remain readable.
+    'lavender': 1,
     'dandelion': 4,
 }
 

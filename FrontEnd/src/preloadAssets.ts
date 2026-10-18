@@ -1,6 +1,6 @@
 import daisyImage from './assets/pict/daisy-transparent.webp'
-import dandelionImage from './assets/pict/dandelion-transparent.webp'
-import lavenderImage from './assets/pict/lavender-transparent.webp'
+import blueGlobeThistleImage from './assets/pict/Blue Globe Thistle.png'
+import peachRoseImage from './assets/pict/Peach Rose.png'
 import stripedCarnationImage from './assets/pict/striped-carnation-transparent.webp'
 import sunflowerImage from './assets/pict/sunflower-transparent.webp'
 
@@ -19,10 +19,10 @@ const backgroundAssets = [
 
 const resultFlowerAssets = [
   sunflowerImage,
-  lavenderImage,
+  peachRoseImage,
   daisyImage,
   stripedCarnationImage,
-  dandelionImage,
+  blueGlobeThistleImage,
 ]
 
 const seenAssets = new Set<string>()

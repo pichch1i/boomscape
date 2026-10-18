@@ -22,7 +22,7 @@ export const emotionResults: Record<Emotion, EmotionResult> = {
     message: 'แสงของวันใหม่ยังรอให้คุณหันไปพบเสมอ',
   },
   Anxiety: {
-    flower: 'ลาเวนเดอร์',
+    flower: 'กุหลาบสีพีช',
     reason: 'ความสงบ การปลอบประโลม และการคลายความกังวล',
     resultTitle: 'ดอกไม้แห่งการปลอบประโลม',
     message: 'ไม่จำเป็นต้องรู้ทุกคำตอบในตอนนี้',
@@ -40,7 +40,7 @@ export const emotionResults: Record<Emotion, EmotionResult> = {
     message: 'ความรู้สึกของคุณมีที่ทาง และไม่จำเป็นต้องรีบจางหาย',
   },
   Frustration: {
-    flower: 'แดนดิไลออน',
+    flower: 'โกลบ ธิสเซิล',
     reason: 'ความเข้มแข็ง ความแน่วแน่ และการเผชิญความท้าทาย',
     resultTitle: 'ดอกไม้แห่งแรงผลักดัน',
     message: 'แรงที่อยู่ข้างในคุณ ค่อย ๆ เปลี่ยนเป็นการเติบโตได้',
@@ -55,7 +55,7 @@ const englishEmotionResults: Record<Emotion, EmotionResult> = {
     message: 'The light of a new day is always waiting for you to turn toward it.',
   },
   Anxiety: {
-    flower: 'Lavender',
+    flower: 'Peach Rose',
     reason: 'Calm, comfort, and the gentle easing of worry.',
     resultTitle: 'The flower of comfort',
     message: 'You do not need to know every answer right now.',
@@ -73,7 +73,7 @@ const englishEmotionResults: Record<Emotion, EmotionResult> = {
     message: 'Your feelings have a place, and they do not need to fade in a hurry.',
   },
   Frustration: {
-    flower: 'Dandelion',
+    flower: 'Globe Thistle',
     reason: 'Strength, determination, and the courage to face challenges.',
     resultTitle: 'The flower of inner drive',
     message: 'The energy within you can gradually turn into growth.',

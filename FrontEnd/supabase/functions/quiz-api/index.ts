@@ -44,10 +44,10 @@ const resultByEmotion: Record<
   { flower: string; resultTitle: string }
 > = {
   Hope: { flower: 'ดอกทานตะวัน', resultTitle: 'ดอกไม้แห่งแสงวันใหม่' },
-  Anxiety: { flower: 'ลาเวนเดอร์', resultTitle: 'ดอกไม้แห่งการปลอบประโลม' },
+  Anxiety: { flower: 'กุหลาบสีพีช', resultTitle: 'ดอกไม้แห่งการปลอบประโลม' },
   Serenity: { flower: 'ดอกเดซี', resultTitle: 'ดอกไม้แห่งลมหายใจ' },
   Sadness: { flower: 'คาร์เนชั่นลายริ้ว', resultTitle: 'ดอกไม้แห่งความรู้สึกลึกซึ้ง' },
-  Frustration: { flower: 'แดนดิไลออน', resultTitle: 'ดอกไม้แห่งแรงผลักดัน' },
+  Frustration: { flower: 'โกลบ ธิสเซิล', resultTitle: 'ดอกไม้แห่งแรงผลักดัน' },
 }
 
 const emotionOrder: Emotion[] = [

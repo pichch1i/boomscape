@@ -6,8 +6,8 @@ import {
 import type { Language } from '../i18n'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 import daisyImage from '../assets/pict/daisy-transparent.webp'
-import dandelionImage from '../assets/pict/dandelion-transparent.webp'
-import lavenderImage from '../assets/pict/lavender-transparent.webp'
+import blueGlobeThistleImage from '../assets/pict/Blue Globe Thistle.png'
+import peachRoseImage from '../assets/pict/Peach Rose.png'
 import stripedCarnationImage from '../assets/pict/striped-carnation-transparent.webp'
 import sunflowerImage from '../assets/pict/sunflower-transparent.webp'
 import { submitResultFeedback } from '../services/backendApi'
@@ -27,10 +27,10 @@ type ResultPageProps = {
 
 const flowerImages: Record<Emotion, string> = {
   Hope: sunflowerImage,
-  Anxiety: lavenderImage,
+  Anxiety: peachRoseImage,
   Serenity: daisyImage,
   Sadness: stripedCarnationImage,
-  Frustration: dandelionImage,
+  Frustration: blueGlobeThistleImage,
 }
 
 function ResultPage({
