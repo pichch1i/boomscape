@@ -34,7 +34,7 @@ callback จะเก็บ `cursor`, เติม `after=CURSOR` ใน URL อ
 | 1 | `peach_rose` | กุหลาบสีพีช | Anxiety |
 | 2 | `daisy` | ดอกเดซี | Serenity |
 | 3 | `striped_carnation` | คาร์เนชั่นลายริ้ว | Sadness |
-| 4 | `globe_thistle` | โกลบ ธิสเซิล | Frustration |
+| 4 | `globe_thistle` | โกลบ ธีสเซิล | Frustration |
 
 ใช้ค่า `displayName` กับ Text TOP ได้ทันที ระบบจะใช้ชื่อเล่นเมื่อมี และใช้ชื่อดอกไม้เมื่อยังไม่ได้ตั้งชื่อ
 

@@ -47,7 +47,7 @@ const resultByEmotion: Record<
   Anxiety: { flower: 'กุหลาบสีพีช', resultTitle: 'ดอกไม้แห่งการปลอบประโลม' },
   Serenity: { flower: 'ดอกเดซี', resultTitle: 'ดอกไม้แห่งลมหายใจ' },
   Sadness: { flower: 'คาร์เนชั่นลายริ้ว', resultTitle: 'ดอกไม้แห่งความรู้สึกลึกซึ้ง' },
-  Frustration: { flower: 'โกลบ ธิสเซิล', resultTitle: 'ดอกไม้แห่งแรงผลักดัน' },
+  Frustration: { flower: 'โกลบ ธีสเซิล', resultTitle: 'ดอกไม้แห่งแรงผลักดัน' },
 }
 
 const emotionOrder: Emotion[] = [

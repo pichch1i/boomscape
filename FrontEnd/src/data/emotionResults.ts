@@ -40,7 +40,7 @@ export const emotionResults: Record<Emotion, EmotionResult> = {
     message: 'ความรู้สึกของคุณมีที่ทาง และไม่จำเป็นต้องรีบจางหาย',
   },
   Frustration: {
-    flower: 'โกลบ ธิสเซิล',
+    flower: 'โกลบ ธีสเซิล',
     reason: 'ความเข้มแข็ง ความแน่วแน่ และการเผชิญความท้าทาย',
     resultTitle: 'ดอกไม้แห่งแรงผลักดัน',
     message: 'แรงที่อยู่ข้างในคุณ ค่อย ๆ เปลี่ยนเป็นการเติบโตได้',
