@@ -1,8 +1,8 @@
-import daisyImage from './assets/pict/Daisy.png'
-import blueGlobeThistleImage from './assets/pict/Blue Globe Thistle.png'
-import peachRoseImage from './assets/pict/Peach Rose.png'
-import stripedCarnationImage from './assets/pict/Striped Carnation.png'
-import sunflowerImage from './assets/pict/Sunflower.png'
+import daisyImage from './assets/pict/Daisy.webp'
+import blueGlobeThistleImage from './assets/pict/Blue Globe Thistle.webp'
+import peachRoseImage from './assets/pict/Peach Rose.webp'
+import stripedCarnationImage from './assets/pict/Striped Carnation.webp'
+import sunflowerImage from './assets/pict/Sunflower.webp'
 
 const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path}`
 
